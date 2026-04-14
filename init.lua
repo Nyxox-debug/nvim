@@ -231,7 +231,7 @@ require("gitsigns").setup()
 
 require('mason').setup()
 require('mason-lspconfig').setup({
-    ensure_installed = { 'lua_ls', 'rust_analyzer', 'gopls', 'zls', 'ts_ls', 'clangd', 'html', 'cssls', 'svelte', 'pyright', 'jsonls', 'taplo', 'yamlls', 'bashls', 'dockerls' },
+    ensure_installed = { 'lua_ls', 'rust_analyzer', 'gopls', 'zls', 'ts_ls', 'clangd', 'html', 'cssls', 'svelte', 'pyright', 'jsonls', 'taplo', 'yamlls', 'bashls', 'dockerls', 'tailwindcss' },
     automatic_installation = true,
 })
 
@@ -240,7 +240,7 @@ require('nvim-treesitter').setup {
     install_dir = vim.fn.stdpath('data') .. '/site',
 }
 
-require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json'}
+require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html' }
 
 vim.api.nvim_create_autocmd('FileType', {
     callback = function()
