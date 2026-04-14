@@ -5,7 +5,7 @@ require("keymaps")
 local colors = {
     black      = "#000000",
     white      = "#ffffff",
-    light_gray = "#555555",
+    light_gray = "#222222",
     gray       = "#555555",
 }
 
@@ -124,7 +124,6 @@ require('todo-comments').setup()
 
 -- require('telescope').load_extension('todo-comments')
 
--- Highlights to match your black/white theme
 vim.cmd("highlight TelescopeNormal          guibg=#000000 guifg=#ffffff")
 vim.cmd("highlight TelescopeBorder          guibg=#000000 guifg=#555555")
 vim.cmd("highlight TelescopePromptNormal    guibg=#111111 guifg=#ffffff")
@@ -166,7 +165,10 @@ require('lualine').setup({
     },
     sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_b = { {
+            'branch',
+            color = { fg = colors.white, bg = colors.light_gray },
+        }, 'diff', 'diagnostics' },
         lualine_c = { 'filename' },
         lualine_x = { 'filetype' },
         lualine_y = { 'progress' },
@@ -235,7 +237,6 @@ require('mason-lspconfig').setup({
 
 require("oil").setup()
 require('nvim-treesitter').setup {
-    -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
     install_dir = vim.fn.stdpath('data') .. '/site',
 }
 
@@ -255,13 +256,11 @@ keymap('n', '<leader>fg', builtin.live_grep)
 keymap('n', '<leader>fb', builtin.buffers)
 keymap('n', '<leader>fh', builtin.help_tags)
 
--- Black and white theme --
 vim.cmd("syntax off")
 vim.cmd("highlight Normal guibg=#000000")
 vim.cmd("highlight NormalNC guibg=#000000")
 vim.cmd("highlight SignColumn guibg=#000000")
 
--- At the bottom of your init.lua (or wherever you want the dashboard)
 
 local function setup_dashboard()
     local header_lines = {
