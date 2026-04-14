@@ -1,0 +1,309 @@
+require("lsp")
+require("keymaps")
+
+
+local colors = {
+    black      = "#000000",
+    white      = "#ffffff",
+    light_gray = "#555555",
+    gray       = "#555555",
+}
+
+local opt = vim.opt
+opt.clipboard = "unnamedplus"
+opt.number = true
+opt.relativenumber = true
+opt.signcolumn = "yes"
+opt.cursorline = false
+opt.expandtab = true
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.smartindent = true
+opt.ignorecase = true
+opt.smartcase = true
+opt.hlsearch = false
+opt.incsearch = true
+opt.mouse = "a"
+opt.wrap = false
+opt.updatetime = 250
+opt.timeoutlen = 400
+opt.swapfile = false
+opt.backup = false
+opt.undofile = true
+opt.splitright = true
+opt.splitbelow = true
+opt.scrolloff = 8
+opt.sidescrolloff = 8
+
+-- Plugins --
+
+local gh = function(x) return 'https://github.com/' .. x end
+vim.pack.add({ 'https://github.com/nvim-treesitter/nvim-treesitter' })
+vim.pack.add({ gh('stevearc/oil.nvim') })
+vim.pack.add({ gh('williamboman/mason.nvim') })
+vim.pack.add({ gh('williamboman/mason-lspconfig.nvim') })
+vim.pack.add({ gh('kdheepak/lazygit.nvim') })
+vim.pack.add({ gh('nvim-lua/plenary.nvim') })
+vim.pack.add({ gh('lewis6991/gitsigns.nvim') })
+vim.pack.add({ gh('nvim-flutter/flutter-tools.nvim') })
+vim.pack.add({ gh('stevearc/dressing.nvim') })
+vim.pack.add({ gh('b0o/incline.nvim') })
+vim.pack.add({ gh('saghen/blink.cmp') })
+vim.pack.add({ gh('nvim-lualine/lualine.nvim') })
+vim.pack.add({ gh('nvim-tree/nvim-web-devicons') })
+vim.pack.add({ gh('rmagatti/auto-session') })
+vim.pack.add({ gh('kylechui/nvim-surround') })
+vim.pack.add({ gh('echasnovski/mini.pairs') })
+vim.pack.add({ gh('akinsho/toggleterm.nvim') })
+vim.pack.add({ gh('nvim-telescope/telescope.nvim') })
+vim.pack.add({ gh('folke/todo-comments.nvim') })
+vim.pack.add({ gh('folke/noice.nvim') })
+vim.pack.add({ gh('MunifTanjim/nui.nvim') })
+vim.pack.add({ gh('rcarriga/nvim-notify') })
+
+
+
+
+
+
+
+require('notify').setup({
+    background_colour = "#000000",
+    render            = "minimal",
+    stages            = "static",
+    timeout           = 2500,
+    top_down          = false,
+})
+
+require('noice').setup({
+    presets = { lsp_doc_border = true },
+    notify  = { enabled = true },
+    cmdline = {
+        view   = "cmdline",
+        format = {
+            search_down = { view = "cmdline" },
+            search_up   = { view = "cmdline" },
+        },
+    },
+    routes  = {
+        {
+            filter = {
+                event = "msg_show",
+                any   = {
+                    { find = "written" },
+                    { find = "yanked" },
+                    { find = "change" },
+                    { find = "line" },
+                },
+            },
+            opts = { skip = true },
+        },
+    },
+})
+
+require('telescope').setup({
+    defaults = {
+        prompt_prefix    = "  ",
+        selection_caret  = " ",
+        sorting_strategy = "ascending",
+        layout_strategy  = "horizontal",
+        layout_config    = {
+            prompt_position = "top",
+            preview_width   = 0.55,
+            width           = 0.87,
+            height          = 0.80,
+        },
+        border           = true,
+        borderchars      = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+        winblend         = 0,
+        color_devicons   = false,
+    },
+})
+
+require('todo-comments').setup()
+
+-- require('telescope').load_extension('todo-comments')
+
+-- Highlights to match your black/white theme
+vim.cmd("highlight TelescopeNormal          guibg=#000000 guifg=#ffffff")
+vim.cmd("highlight TelescopeBorder          guibg=#000000 guifg=#555555")
+vim.cmd("highlight TelescopePromptNormal    guibg=#111111 guifg=#ffffff")
+vim.cmd("highlight TelescopePromptBorder    guibg=#111111 guifg=#555555")
+vim.cmd("highlight TelescopePromptTitle     guibg=#555555 guifg=#000000")
+vim.cmd("highlight TelescopePreviewTitle    guibg=#000000 guifg=#555555")
+vim.cmd("highlight TelescopeResultsTitle    guibg=#000000 guifg=#000000")
+vim.cmd("highlight TelescopeSelection       guibg=#222222 guifg=#ffffff")
+vim.cmd("highlight TelescopeMatching        guifg=#ffffff gui=bold")
+
+require('toggleterm').setup({
+    size = 15,
+    open_mapping = [[<c-\>]],
+    direction = 'horizontal',
+    shade_terminals = false,
+})
+
+require("mini.pairs").setup()
+
+require("auto-session").setup({
+    auto_restore_enabled = false,
+    auto_session_suppress_dirs = { "~/", "~/Dev/", "~/Downloads", "~/Documents", "~/Desktop/" },
+})
+
+require('lualine').setup({
+    options = {
+        theme = {
+            normal   = { a = { bg = colors.white, fg = colors.black, gui = "bold" }, b = { bg = colors.light_gray, fg = colors.black }, c = { bg = colors.black, fg = colors.white } },
+            insert   = { a = { bg = colors.light_gray, fg = colors.black, gui = "bold" }, b = { bg = colors.light_gray, fg = colors.black }, c = { bg = colors.black, fg = colors.white } },
+            visual   = { a = { bg = colors.gray, fg = colors.white, gui = "bold" }, b = { bg = colors.light_gray, fg = colors.black }, c = { bg = colors.black, fg = colors.white } },
+            command  = { a = { bg = colors.gray, fg = colors.white, gui = "bold" }, b = { bg = colors.light_gray, fg = colors.black }, c = { bg = colors.black, fg = colors.white } },
+            replace  = { a = { bg = colors.black, fg = colors.white, gui = "bold" }, b = { bg = colors.light_gray, fg = colors.black }, c = { bg = colors.black, fg = colors.white } },
+            inactive = { a = { bg = colors.black, fg = colors.gray, gui = "bold" }, b = { bg = colors.black, fg = colors.gray }, c = { bg = colors.black, fg = colors.gray } },
+        },
+        section_separators = { left = "", right = "" },
+        component_separators = { left = "", right = "" },
+        -- section_separators = '',
+        -- component_separators = '│',
+    },
+    sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = { 'filename' },
+        lualine_x = { 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' },
+    },
+    inactive_sections = {
+        lualine_c = { 'filename' },
+        lualine_x = { 'location' },
+    },
+})
+
+require('blink.cmp').setup({
+    keymap = {
+        preset        = "none",
+        ["<Tab>"]     = { "select_next", "fallback" },
+        ["<S-Tab>"]   = { "select_prev", "fallback" },
+        ["<CR>"]      = { "accept", "fallback" },
+        ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+        ["<C-e>"]     = { "hide" },
+    },
+    sources = {
+        default = { "lsp", "path", "buffer" },
+    },
+    fuzzy = { implementation = "lua" },
+})
+
+require('incline').setup({
+    highlight = {
+        groups = {
+            InclineNormal = {
+                guifg = colors.black,
+                guibg = colors.white,
+            },
+            InclineNormalNC = {
+                guibg = "#d0d0d0",
+                guifg = colors.black,
+            },
+        },
+    },
+    window = {
+        margin = { vertical = 1, horizontal = 1 },
+        padding = 1,
+        placement = {
+            horizontal = "right",
+            vertical = "top",
+        },
+    },
+    render = function(props)
+        local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+        if vim.bo[props.buf].modified then
+            filename = filename .. " ●"
+        end
+        return filename
+    end,
+})
+
+require('flutter-tools').setup()
+
+require("gitsigns").setup()
+
+require('mason').setup()
+require('mason-lspconfig').setup({
+    ensure_installed = { 'lua_ls', 'rust_analyzer', 'gopls', 'zls', 'ts_ls', 'clangd', 'html', 'svelte', 'pyright' },
+    automatic_installation = true,
+})
+
+require("oil").setup()
+require('nvim-treesitter').setup {
+    -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
+    install_dir = vim.fn.stdpath('data') .. '/site',
+}
+
+require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp' }
+
+vim.api.nvim_create_autocmd('FileType', {
+    callback = function()
+        pcall(vim.treesitter.start)
+    end,
+})
+
+local builtin = require('telescope.builtin')
+
+local keymap = vim.keymap.set
+keymap('n', '<leader>ff', builtin.find_files)
+keymap('n', '<leader>fg', builtin.live_grep)
+keymap('n', '<leader>fb', builtin.buffers)
+keymap('n', '<leader>fh', builtin.help_tags)
+
+-- Black and white theme --
+vim.cmd("syntax off")
+vim.cmd("highlight Normal guibg=#000000")
+vim.cmd("highlight NormalNC guibg=#000000")
+vim.cmd("highlight SignColumn guibg=#000000")
+
+-- At the bottom of your init.lua (or wherever you want the dashboard)
+
+local function setup_dashboard()
+    local header_lines = {
+        "                    ",
+        "   ╱|、            ",
+        "  (˚ˎ 。7          ",
+        "   |、˜〵          ",
+        "   じしˍ,)ノ       ",
+        "                    ",
+    }
+
+    vim.api.nvim_create_autocmd("VimEnter", {
+        callback = function()
+            if vim.fn.argc() == 0 then
+                local buf = vim.api.nvim_create_buf(false, true)
+                vim.api.nvim_set_current_buf(buf)
+                vim.bo[buf].buftype = "nofile"
+                vim.bo[buf].bufhidden = "wipe"
+                vim.bo[buf].modifiable = true
+
+                local width = vim.o.columns
+                local lines = {}
+
+                -- vertical padding
+                for _ = 1, math.floor(vim.o.lines / 3) do
+                    table.insert(lines, "")
+                end
+
+                for _, line in ipairs(header_lines) do
+                    local pad = math.floor((width - vim.fn.strdisplaywidth(line)) / 2)
+                    table.insert(lines, string.rep(" ", pad) .. line)
+                end
+
+                vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+                vim.bo[buf].modifiable = false
+
+                -- close on any keypress
+                vim.keymap.set('n', '<CR>', '<cmd>enew<CR>', { buffer = buf, silent = true })
+                vim.keymap.set('n', 'q', '<cmd>qa<CR>', { buffer = buf, silent = true })
+            end
+        end,
+    })
+end
+
+setup_dashboard()
