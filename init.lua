@@ -231,7 +231,7 @@ require("gitsigns").setup()
 
 require('mason').setup()
 require('mason-lspconfig').setup({
-    ensure_installed = { 'lua_ls', 'rust_analyzer', 'gopls', 'zls', 'ts_ls', 'clangd', 'html', 'svelte', 'pyright' },
+    ensure_installed = { 'lua_ls', 'rust_analyzer', 'gopls', 'zls', 'ts_ls', 'clangd', 'html', 'cssls', 'svelte', 'pyright', 'jsonls', 'taplo', 'yamlls', 'bashls', 'dockerls' },
     automatic_installation = true,
 })
 
@@ -240,7 +240,7 @@ require('nvim-treesitter').setup {
     install_dir = vim.fn.stdpath('data') .. '/site',
 }
 
-require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp' }
+require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json'}
 
 vim.api.nvim_create_autocmd('FileType', {
     callback = function()
@@ -260,6 +260,31 @@ vim.cmd("syntax off")
 vim.cmd("highlight Normal guibg=#000000")
 vim.cmd("highlight NormalNC guibg=#000000")
 vim.cmd("highlight SignColumn guibg=#000000")
+
+vim.cmd("highlight NotifyERRORBorder guifg=#555555 guibg=#000000")
+vim.cmd("highlight NotifyERRORIcon   guifg=#ffffff")
+vim.cmd("highlight NotifyERRORTitle  guifg=#ffffff")
+vim.cmd("highlight NotifyERRORBody   guifg=#ffffff guibg=#000000")
+
+vim.cmd("highlight NotifyWARNBorder  guifg=#555555 guibg=#000000")
+vim.cmd("highlight NotifyWARNIcon    guifg=#ffffff")
+vim.cmd("highlight NotifyWARNTitle   guifg=#ffffff")
+vim.cmd("highlight NotifyWARNBody    guifg=#ffffff guibg=#000000")
+
+vim.cmd("highlight NotifyINFOBorder  guifg=#555555 guibg=#000000")
+vim.cmd("highlight NotifyINFOIcon    guifg=#ffffff")
+vim.cmd("highlight NotifyINFOTitle   guifg=#ffffff")
+vim.cmd("highlight NotifyINFOBody    guifg=#ffffff guibg=#000000")
+
+vim.cmd("highlight NotifyDEBUGBorder guifg=#555555 guibg=#000000")
+vim.cmd("highlight NotifyDEBUGIcon   guifg=#555555")
+vim.cmd("highlight NotifyDEBUGTitle  guifg=#555555")
+vim.cmd("highlight NotifyDEBUGBody   guifg=#555555 guibg=#000000")
+
+vim.cmd("highlight NotifyTRACEBorder guifg=#555555 guibg=#000000")
+vim.cmd("highlight NotifyTRACEIcon   guifg=#555555")
+vim.cmd("highlight NotifyTRACETitle  guifg=#555555")
+vim.cmd("highlight NotifyTRACEBody   guifg=#555555 guibg=#000000")
 
 
 local function setup_dashboard()
