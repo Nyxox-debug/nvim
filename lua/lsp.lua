@@ -11,6 +11,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
         k('n', '<leader>rn', lsp.buf.rename)
         k('n', '<leader>ca', lsp.buf.code_action)
         k('n', '<leader>f', function() lsp.buf.format({ async = true }) end)
+
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client and client:supports_method('textDocument/semanticTokens') then
+            vim.lsp.semantic_tokens.enable(true, { bufnr = buf })
+        end
     end,
 })
 

@@ -60,12 +60,13 @@ vim.pack.add({ gh('folke/todo-comments.nvim') })
 vim.pack.add({ gh('folke/noice.nvim') })
 vim.pack.add({ gh('MunifTanjim/nui.nvim') })
 vim.pack.add({ gh('rcarriga/nvim-notify') })
+vim.pack.add({ gh('folke/trouble.nvim') })
 
 
 
 
 
-
+require('trouble').setup()
 
 require('notify').setup({
     background_colour = "#000000",
@@ -235,12 +236,21 @@ require('mason-lspconfig').setup({
     automatic_installation = true,
 })
 
-require("oil").setup()
+require("oil").setup({
+    view_options = {
+        show_hidden = true,
+        natural_order = true,
+        is_always_hidden = function(name, _)
+            return name == ".." or name == ".git"
+        end,
+    },
+})
 require('nvim-treesitter').setup {
     install_dir = vim.fn.stdpath('data') .. '/site',
 }
 
-require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html' }
+require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte' }
+
 
 vim.api.nvim_create_autocmd('FileType', {
     callback = function()
