@@ -250,7 +250,7 @@ require('nvim-treesitter').setup {
     install_dir = vim.fn.stdpath('data') .. '/site',
 }
 
-require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte', 'python'}
+require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte', 'python' }
 
 
 vim.api.nvim_create_autocmd('FileType', {
@@ -304,12 +304,14 @@ local dashboard = require('alpha.themes.startify')
 local header = {
     type = "text",
     val = {
-        "                    ",
-        "   ╱|、            ",
-        "  (˚ˎ 。7          ",
-        "   |、˜〵          ",
-        "   じしˍ,)ノ       ",
-        "                    ",
+        [[    /^ ^\           ]],
+        [[   / 0 0 \          ]],
+        [[   V\ Y /V          ]],
+        [[    / - \           ]],
+        [[   /    |           ]],
+        [[  V__) ||           ]],
+        [[                    ]],
+        [[  - G O O D BOY -   ]],
     },
     opts = {
         position = "center",
