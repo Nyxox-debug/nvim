@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "alpha-nvim": {
+      "rev": "7563da4a861ee6b3ed674d0ee5c5c0bd19383a38",
+      "src": "https://github.com/goolord/alpha-nvim"
+    },
     "auto-session": {
       "rev": "62437532b38495551410b3f377bcf4aaac574ebe",
       "src": "https://github.com/rmagatti/auto-session"

@@ -61,6 +61,7 @@ vim.pack.add({ gh('folke/noice.nvim') })
 vim.pack.add({ gh('MunifTanjim/nui.nvim') })
 vim.pack.add({ gh('rcarriga/nvim-notify') })
 vim.pack.add({ gh('folke/trouble.nvim') })
+vim.pack.add({ gh('goolord/alpha-nvim') })
 
 
 
@@ -249,7 +250,7 @@ require('nvim-treesitter').setup {
     install_dir = vim.fn.stdpath('data') .. '/site',
 }
 
-require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte' }
+require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte', 'python'}
 
 
 vim.api.nvim_create_autocmd('FileType', {
@@ -297,47 +298,48 @@ vim.cmd("highlight NotifyTRACETitle  guifg=#555555")
 vim.cmd("highlight NotifyTRACEBody   guifg=#555555 guibg=#000000")
 
 
-local function setup_dashboard()
-    local header_lines = {
+local alpha = require('alpha')
+local dashboard = require('alpha.themes.startify')
+
+local header = {
+    type = "text",
+    val = {
         "                    ",
         "   ╱|、            ",
         "  (˚ˎ 。7          ",
         "   |、˜〵          ",
         "   じしˍ,)ノ       ",
         "                    ",
-    }
+    },
+    opts = {
+        position = "center",
+        hl = "Normal",
+    },
+}
 
-    vim.api.nvim_create_autocmd("VimEnter", {
-        callback = function()
-            if vim.fn.argc() == 0 then
-                local buf = vim.api.nvim_create_buf(false, true)
-                vim.api.nvim_set_current_buf(buf)
-                vim.bo[buf].buftype = "nofile"
-                vim.bo[buf].bufhidden = "wipe"
-                vim.bo[buf].modifiable = true
+-- local actions = {
+--     type = "group",
+--     val = {
+--         {
+--             type = "button",
+--             val = "  New file",
+--             on_press = function() vim.cmd("enew") end,
+--             opts = { shortcut = "n", position = "center", hl = "Normal" },
+--         },
+--         {
+--             type = "button",
+--             val = "  Quit",
+--             on_press = function() vim.cmd("qa") end,
+--             opts = { shortcut = "q", position = "center", hl = "Normal" },
+--         },
+--     },
+-- }
 
-                local width = vim.o.columns
-                local lines = {}
+local layout = {
+    { type = "padding", val = math.floor(vim.o.lines / 3) },
+    header,
+    { type = "padding", val = 2 },
+    actions,
+}
 
-                -- vertical padding
-                for _ = 1, math.floor(vim.o.lines / 3) do
-                    table.insert(lines, "")
-                end
-
-                for _, line in ipairs(header_lines) do
-                    local pad = math.floor((width - vim.fn.strdisplaywidth(line)) / 2)
-                    table.insert(lines, string.rep(" ", pad) .. line)
-                end
-
-                vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-                vim.bo[buf].modifiable = false
-
-                -- close on any keypress
-                vim.keymap.set('n', '<CR>', '<cmd>enew<CR>', { buffer = buf, silent = true })
-                vim.keymap.set('n', 'q', '<cmd>qa<CR>', { buffer = buf, silent = true })
-            end
-        end,
-    })
-end
-
-setup_dashboard()
+alpha.setup({ layout = layout, opts = {} })
