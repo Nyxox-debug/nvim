@@ -2,7 +2,10 @@ vim.g.mapleader = " "
 
 local keymap = vim.keymap.set
 keymap('n', '<leader>ft', '<cmd>TodoTelescope<CR>')
+keymap('n', '<C-u>', '<C-u>zz')
+keymap('n', '<C-d>', '<C-d>zz')
 keymap("i", "jj", "<Esc>")
+keymap('n', '<leader>rn', vim.lsp.buf.rename)
 keymap('n', '<leader>b', function() print('real lua function') end)
 keymap("n", "<leader>uw", ":set wrap!<CR>")
 keymap('n', '<leader>r', function() print('not real lua function') end)
