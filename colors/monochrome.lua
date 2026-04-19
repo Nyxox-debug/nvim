@@ -22,7 +22,7 @@ local function hi(group, opts)
   vim.api.nvim_set_hl(0, group, opts)
 end
 
--- ── Editor UI (unchanged) ─────────────────────────────────────
+-- ── Editor UI
 hi("Normal",        { fg = c.fg,     bg = c.bg })
 hi("NormalFloat",   { fg = c.fg,     bg = "#111111" })
 hi("Cursor",        { fg = c.bg,     bg = c.accent })
@@ -46,7 +46,7 @@ hi("NonText",       { fg = c.dim5 })
 hi("Folded",        { fg = c.dim3,   bg = "#181818", italic = true })
 hi("EndOfBuffer",   { fg = c.dim5 })
 
--- ── Classic syntax groups (fallback for no treesitter) ────────
+-- ── Classic syntax groups (fallback for no treesitter)
 
 -- Comments — nearly invisible, italic
 hi("Comment",     { fg = c.dim4, italic = true })
@@ -152,7 +152,7 @@ hi("@tag",                        { fg = c.fg,   bold = true })
 hi("@tag.attribute",              { fg = c.dim1, italic = true })
 hi("@tag.delimiter",              { fg = c.dim3 })
 
--- ── LSP semantic tokens ───────────────────────────────────────
+-- ── LSP semantic tokens
 hi("@lsp.type.function",          { fg = c.accent, bold = true, underline = true })
 hi("@lsp.type.method",            { fg = c.accent, bold = true, underline = true })
 hi("@lsp.type.keyword",           { fg = c.accent, bold = true })
@@ -174,7 +174,7 @@ hi("@lsp.mod.readonly",           { underline = true })
 hi("@lsp.mod.static",             { bold = true })
 hi("@lsp.mod.deprecated",         { strikethrough = true, fg = c.dim4 })
 
--- ── Diagnostics ───────────────────────────────────────────────
+-- ── Diagnostics
 hi("DiagnosticError",             { fg = c.accent, bold = true })
 hi("DiagnosticWarn",              { fg = c.dim1 })
 hi("DiagnosticInfo",              { fg = c.dim2 })
@@ -182,7 +182,7 @@ hi("DiagnosticHint",              { fg = c.dim3 })
 hi("DiagnosticUnderlineError",    { underline = true, sp = c.accent })
 hi("DiagnosticUnderlineWarn",     { underline = true, sp = c.dim1 })
 
--- ── Git ───────────────────────────────────────────────────────
+-- ── Git
 hi("GitSignsAdd",                 { fg = c.fg })
 hi("GitSignsChange",              { fg = c.dim2 })
 hi("GitSignsDelete",              { fg = c.dim4 })
