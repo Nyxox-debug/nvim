@@ -1,6 +1,8 @@
 vim.g.mapleader = " "
 
 local keymap = vim.keymap.set
+
+keymap("n", "<leader>tm", function() vim.cmd("colorscheme monochrome") end)
 keymap('n', '<leader>ft', '<cmd>TodoTelescope<CR>')
 keymap('n', '<C-u>', '<C-u>zz')
 keymap('n', '<C-d>', '<C-d>zz')
@@ -34,8 +36,8 @@ keymap("n", "<leader>nh", ":nohl<CR>")
 keymap('n', '<leader>lg', '<cmd>LazyGit<cr>')
 keymap("n", "<leader>fR", "<cmd>FlutterRun<CR>")
 keymap("n", "<leader>fr", "<cmd>FlutterReload<CR>")
-keymap('n','<leader>xd', "<cmd>Trouble diagnostics toggle filter.buf=0<cr>")
-keymap('n','<leader>xw', "<cmd>Trouble diagnostics toggle<cr>")
+keymap('n', '<leader>xd', "<cmd>Trouble diagnostics toggle filter.buf=0<cr>")
+keymap('n', '<leader>xw', "<cmd>Trouble diagnostics toggle<cr>")
 keymap("n", "<leader>fq", "<cmd>FlutterQuit<CR>")
 keymap("n", "<leader>wr", "<cmd>AutoSession restore<CR>")
 keymap("n", "<leader>ws", "<cmd>AutoSession save<CR>")

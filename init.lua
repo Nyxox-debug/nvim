@@ -9,6 +9,8 @@ local colors = {
     gray       = "#555555",
 }
 
+-- vim.cmd("colorscheme monochrome")
+
 local opt = vim.opt
 opt.clipboard = "unnamedplus"
 opt.number = true
