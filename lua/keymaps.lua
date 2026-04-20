@@ -2,6 +2,7 @@ vim.g.mapleader = " "
 
 local keymap = vim.keymap.set
 
+keymap("n", "<leader>ch", "<cmd>Telescope git_commits<cr>")
 keymap("n", "<leader>tm", function() vim.cmd("colorscheme monochrome") end)
 keymap('n', '<leader>ft', '<cmd>TodoTelescope<CR>')
 keymap('n', '<C-u>', '<C-u>zz')
