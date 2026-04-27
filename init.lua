@@ -126,8 +126,6 @@ require('telescope').setup({
 
 require('todo-comments').setup()
 
--- require('telescope').load_extension('todo-comments')
-
 vim.cmd("highlight TelescopeNormal          guibg=#000000 guifg=#ffffff")
 vim.cmd("highlight TelescopeBorder          guibg=#000000 guifg=#555555")
 vim.cmd("highlight TelescopePromptNormal    guibg=#111111 guifg=#ffffff")
