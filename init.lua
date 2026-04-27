@@ -67,8 +67,6 @@ vim.pack.add({ gh('goolord/alpha-nvim') })
 
 
 
-
-
 require('trouble').setup()
 
 require('notify').setup({
