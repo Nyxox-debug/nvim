@@ -150,3 +150,50 @@ keymap("n", "<leader>rr", function()
         print('Not a C/C++ file')
     end
 end, { desc = "Run C/C++ program with arguments" })
+
+-- Keymaps for Rust
+-- Run without arguments
+keymap("n", "<leader>rs", function()
+    local filetype = vim.bo.filetype
+
+    if filetype == 'rust' then
+        local root_dir = vim.fn.getcwd()
+        local cargo_toml = root_dir .. '/Cargo.toml'
+
+        if vim.fn.filereadable(cargo_toml) == 1 then
+            -- Cargo project: build and run
+            vim.cmd('terminal cargo run')
+        else
+            -- Single file fallback via rustc
+            local filename = vim.fn.expand('%')
+            local output = '/tmp/' .. vim.fn.expand('%:t:r')
+            vim.cmd('terminal rustc ' .. filename .. ' -o ' .. output .. ' && ' .. output)
+        end
+    else
+        print('Not a Rust file')
+    end
+end, { desc = "Run Rust program or Cargo project" })
+
+-- Run with arguments
+keymap("n", "<leader>ra", function()
+    local filetype = vim.bo.filetype
+
+    if filetype == 'rust' then
+        local root_dir = vim.fn.getcwd()
+        local cargo_toml = root_dir .. '/Cargo.toml'
+
+        local args = vim.fn.input('Arguments: ')
+
+        if vim.fn.filereadable(cargo_toml) == 1 then
+            -- Cargo project: pass args after '--'
+            vim.cmd('terminal cargo run -- ' .. args)
+        else
+            -- Single file fallback via rustc
+            local filename = vim.fn.expand('%')
+            local output = '/tmp/' .. vim.fn.expand('%:t:r')
+            vim.cmd('terminal rustc ' .. filename .. ' -o ' .. output .. ' && ' .. output .. ' ' .. args)
+        end
+    else
+        print('Not a Rust file')
+    end
+end, { desc = "Run Rust program with arguments" })
