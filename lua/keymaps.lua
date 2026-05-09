@@ -3,7 +3,21 @@ vim.g.mapleader = " "
 local keymap = vim.keymap.set
 
 keymap("n", "<leader>ch", "<cmd>Telescope git_commits<cr>")
-keymap("n", "<leader>tm", function() vim.cmd("colorscheme monochrome") end)
+local mono_active = false
+
+keymap("n", "<leader>tm", function()
+    if mono_active then
+        vim.cmd("colorscheme default")
+        vim.cmd("syntax off")
+        vim.cmd("highlight Normal guibg=#000000")
+        vim.cmd("highlight NormalNC guibg=#000000")
+        vim.cmd("highlight SignColumn guibg=#000000")
+        mono_active = false
+    else
+        vim.cmd("colorscheme monochrome")
+        mono_active = true
+    end
+end)
 keymap('n', '<leader>ft', '<cmd>TodoTelescope<CR>')
 keymap('n', '<C-u>', '<C-u>zz')
 keymap('n', '<C-d>', '<C-d>zz')
