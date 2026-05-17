@@ -112,9 +112,11 @@ require('telescope').setup({
         layout_strategy  = "horizontal",
         layout_config    = {
             prompt_position = "top",
-            preview_width   = 0.55,
             width           = 0.87,
             height          = 0.80,
+            horizontal = {
+                preview_width = 0.55,
+            },
         },
         border           = true,
         borderchars      = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
@@ -304,6 +306,9 @@ vim.cmd("highlight NotifyTRACEIcon   guifg=#555555")
 vim.cmd("highlight NotifyTRACETitle  guifg=#555555")
 vim.cmd("highlight NotifyTRACEBody   guifg=#555555 guibg=#000000")
 
+
+vim.api.nvim_set_hl(0, "OilDirIcon", { fg = "#ffffff" })
+vim.api.nvim_set_hl(0, "OilDir", { fg = "#ffffff" })
 
 local alpha = require('alpha')
 local dashboard = require('alpha.themes.startify')
