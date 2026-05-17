@@ -306,7 +306,8 @@ vim.cmd("highlight NotifyTRACEIcon   guifg=#555555")
 vim.cmd("highlight NotifyTRACETitle  guifg=#555555")
 vim.cmd("highlight NotifyTRACEBody   guifg=#555555 guibg=#000000")
 
-
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
+vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#000000" })
 vim.api.nvim_set_hl(0, "OilDirIcon", { fg = "#ffffff" })
 vim.api.nvim_set_hl(0, "OilDir", { fg = "#ffffff" })
 
