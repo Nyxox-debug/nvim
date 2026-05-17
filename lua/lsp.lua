@@ -136,3 +136,9 @@ start('tailwindcss', {
     filetypes = { 'html', 'css', 'javascript', 'typescript', 'svelte', 'javascriptreact', 'typescriptreact' },
     root_markers = { 'tailwind.config.js', 'tailwind.config.ts', 'package.json', '.git' },
 })
+
+start('r_language_server', {
+    cmd = { 'R', '--no-echo', '-e', 'languageserver::run()' },
+    filetypes = { 'r', 'rmd' },
+    root_markers = { '.Rproj', 'DESCRIPTION', '.git' },
+})

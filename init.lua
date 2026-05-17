@@ -68,6 +68,7 @@ vim.pack.add({ gh('goolord/alpha-nvim') })
 
 
 require('trouble').setup()
+require('dressing').setup()
 
 require('notify').setup({
     background_colour = "#000000",
@@ -225,7 +226,15 @@ require('incline').setup({
     end,
 })
 
-require('flutter-tools').setup()
+require('flutter-tools').setup({
+    flutter_path = "/home/nyxox/flutter/bin/flutter",
+    flutter_lookup_cmd = nil,
+    fvm = false,
+    lsp = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+    },
+})
 
 require("gitsigns").setup()
 
@@ -248,7 +257,7 @@ require('nvim-treesitter').setup {
     install_dir = vim.fn.stdpath('data') .. '/site',
 }
 
-require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte', 'python' }
+require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte', 'python' , 'r'}
 
 
 vim.api.nvim_create_autocmd('FileType', {
