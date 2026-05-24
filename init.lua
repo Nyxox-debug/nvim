@@ -36,6 +36,11 @@ opt.splitright = true
 opt.splitbelow = true
 opt.scrolloff = 8
 opt.sidescrolloff = 8
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldlevel = 99 -- start with everything unfolded
+opt.foldlevelstart = 99
+opt.foldenable = true
 
 -- Plugins --
 
@@ -114,7 +119,7 @@ require('telescope').setup({
             prompt_position = "top",
             width           = 0.87,
             height          = 0.80,
-            horizontal = {
+            horizontal      = {
                 preview_width = 0.55,
             },
         },
@@ -259,12 +264,19 @@ require('nvim-treesitter').setup {
     install_dir = vim.fn.stdpath('data') .. '/site',
 }
 
-require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte', 'python' , 'r'}
+require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte', 'python', 'r' }
 
 
-vim.api.nvim_create_autocmd('FileType', {
+vim.api.nvim_create_autocmd('BufReadPost', {
     callback = function()
-        pcall(vim.treesitter.start)
+        vim.defer_fn(function()
+            if pcall(vim.treesitter.start) then
+                vim.wo.foldmethod = "expr"
+                vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+                vim.wo.foldlevel = 99
+                vim.wo.foldenable = true
+            end
+        end, 100)
     end,
 })
 
