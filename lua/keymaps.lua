@@ -69,16 +69,7 @@ end)
 -- Terminal keymaps
 keymap("n", "<leader>tv", "<cmd>vsplit | terminal<CR>", { desc = "Terminal in vertical split" })
 keymap("n", "<leader>th", "<cmd>split | terminal<CR>", { desc = "Terminal in horizontal split" })
-keymap("t", "<C-\\><C-n>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 keymap("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-keymap("t", "sh", "<C-\\><C-N><C-w>h", { desc = "Move to left window" })
-keymap("t", "sj", "<C-\\><C-N><C-w>j", { desc = "Move to window below" })
-keymap("t", "sk", "<C-\\><C-N><C-w>k", { desc = "Move to window above" })
-keymap("t", "sl", "<C-\\><C-N><C-w>l", { desc = "Move to right window" })
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
-    pattern = "term://*",
-    command = "startinsert",
-})
 vim.api.nvim_create_autocmd("TermOpen", {
     callback = function()
         vim.opt_local.modified = false
