@@ -66,6 +66,16 @@ keymap("n", "<leader>ts", function()
     end
 end)
 
+-- img preview keybinds
+keymap("n", "<leader>ti", function()
+    local img = require("image")
+    if img.is_enabled() then
+        img.disable()
+    else
+        img.enable()
+    end
+end, { desc = "Toggle image.nvim" })
+
 -- Terminal keymaps
 keymap("n", "<leader>tv", "<cmd>vsplit | terminal<CR>", { desc = "Terminal in vertical split" })
 keymap("n", "<leader>th", "<cmd>split | terminal<CR>", { desc = "Terminal in horizontal split" })

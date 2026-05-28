@@ -69,6 +69,8 @@ vim.pack.add({ gh('MunifTanjim/nui.nvim') })
 vim.pack.add({ gh('rcarriga/nvim-notify') })
 vim.pack.add({ gh('folke/trouble.nvim') })
 vim.pack.add({ gh('goolord/alpha-nvim') })
+vim.pack.add({ gh('3rd/image.nvim') })
+-- vim.pack.add({ gh('vhyrro/luarocks.nvim') }) -- only if using magick_rock
 
 
 
@@ -265,6 +267,16 @@ require('nvim-treesitter').setup {
 }
 
 require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte', 'python', 'r' }
+
+
+require('image').setup({
+    backend = "kitty",      -- Ghostty uses Kitty's protocol
+    processor = "magick_cli",
+    integrations = {
+        markdown = { enabled = true },
+    },
+    max_height_window_percentage = 50,
+})
 
 
 vim.api.nvim_create_autocmd('BufReadPost', {
