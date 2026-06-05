@@ -10,7 +10,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
         k('n', 'K', lsp.buf.hover)
         k('n', '<leader>rn', lsp.buf.rename)
         k('n', '<leader>ca', lsp.buf.code_action)
-        k('n', '<leader>f', function() lsp.buf.format({ async = true }) end)
+        -- Use conform for formatting (falls back to LSP if no formatter configured)
+        k('n', '<leader>f', function()
+            require('conform').format({ async = true, lsp_fallback = true })
+        end)
 
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if client and client:supports_method('textDocument/semanticTokens') then
@@ -23,9 +26,12 @@ local function start(server, config)
     vim.api.nvim_create_autocmd('FileType', {
         pattern = config.filetypes,
         callback = function()
+            -- Merge blink.cmp capabilities so completions work across all servers
+            local capabilities = require('blink.cmp').get_lsp_capabilities()
             vim.lsp.start(vim.tbl_extend('keep', config, {
                 name = server,
                 root_dir = vim.fs.root(0, config.root_markers or { '.git' }),
+                capabilities = capabilities,
             }))
         end,
     })
@@ -92,7 +98,8 @@ start('cssls', {
 start('html', {
     cmd = { 'vscode-html-language-server', '--stdio' },
     filetypes = { 'html' },
-    root_markers = { 'package.json', '.git' },
+    -- Added index.html as fallback so standalone files still get LSP
+    root_markers = { 'package.json', 'index.html', '.git' },
 })
 
 start('svelte', {
@@ -141,4 +148,10 @@ start('r_language_server', {
     cmd = { 'R', '--no-echo', '-e', 'languageserver::run()' },
     filetypes = { 'r', 'rmd' },
     root_markers = { '.Rproj', 'DESCRIPTION', '.git' },
+})
+
+start('jdtls', {
+    cmd = { 'jdtls' },
+    filetypes = { 'java' },
+    root_markers = { 'pom.xml', 'build.gradle', '.git' },
 })

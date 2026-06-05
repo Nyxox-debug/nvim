@@ -38,7 +38,7 @@ opt.scrolloff = 8
 opt.sidescrolloff = 8
 opt.foldmethod = "expr"
 opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-opt.foldlevel = 99 -- start with everything unfolded
+opt.foldlevel = 99
 opt.foldlevelstart = 99
 opt.foldenable = true
 
@@ -70,6 +70,7 @@ vim.pack.add({ gh('rcarriga/nvim-notify') })
 vim.pack.add({ gh('folke/trouble.nvim') })
 vim.pack.add({ gh('goolord/alpha-nvim') })
 vim.pack.add({ gh('3rd/image.nvim') })
+vim.pack.add({ gh('stevearc/conform.nvim') })   -- Added: formatter (prettier etc.)
 -- vim.pack.add({ gh('vhyrro/luarocks.nvim') }) -- only if using magick_rock
 
 
@@ -168,10 +169,8 @@ require('lualine').setup({
             replace  = { a = { bg = colors.black, fg = colors.white, gui = "bold" }, b = { bg = colors.light_gray, fg = colors.black }, c = { bg = colors.black, fg = colors.white } },
             inactive = { a = { bg = colors.black, fg = colors.gray, gui = "bold" }, b = { bg = colors.black, fg = colors.gray }, c = { bg = colors.black, fg = colors.gray } },
         },
-        section_separators = { left = "", right = "" },
-        component_separators = { left = "", right = "" },
-        -- section_separators = '',
-        -- component_separators = '│',
+        section_separators = { left = "", right = "" },
+        component_separators = { left = "", right = "" },
     },
     sections = {
         lualine_a = { 'mode' },
@@ -205,6 +204,27 @@ require('blink.cmp').setup({
     fuzzy = { implementation = "lua" },
 })
 
+-- conform.nvim: handles formatting for filetypes whose LSP doesn't provide it
+-- Make sure prettier is installed: npm install -g prettier
+-- Or install via Mason: :MasonInstall prettier
+require('conform').setup({
+    formatters_by_ft = {
+        html       = { 'prettier' },
+        css        = { 'prettier' },
+        scss       = { 'prettier' },
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        javascriptreact = { 'prettier' },
+        typescriptreact = { 'prettier' },
+        svelte     = { 'prettier' },
+        json       = { 'prettier' },
+        jsonc      = { 'prettier' },
+        yaml       = { 'prettier' },
+        markdown   = { 'prettier' },
+    },
+    format_on_save = nil, -- set to { timeout_ms = 500 } if you want auto-format on save
+})
+
 require('incline').setup({
     highlight = {
         groups = {
@@ -235,13 +255,14 @@ require('incline').setup({
     end,
 })
 
+-- Removed undefined `on_attach` and `capabilities` from flutter-tools lsp config.
+-- flutter-tools will use its own defaults which is correct behaviour.
 require('flutter-tools').setup({
     flutter_path = "/home/nyxox/flutter/bin/flutter",
     flutter_lookup_cmd = nil,
     fvm = false,
     lsp = {
-        on_attach = on_attach,
-        capabilities = capabilities,
+        capabilities = require('blink.cmp').get_lsp_capabilities(),
     },
 })
 
@@ -262,15 +283,15 @@ require("oil").setup({
         end,
     },
 })
+
 require('nvim-treesitter').setup {
     install_dir = vim.fn.stdpath('data') .. '/site',
 }
 
-require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte', 'python', 'r' }
-
+require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte', 'python', 'r', 'java' }
 
 require('image').setup({
-    backend = "kitty",      -- Ghostty uses Kitty's protocol
+    backend = "kitty",
     processor = "magick_cli",
     integrations = {
         markdown = { enabled = true },
@@ -278,17 +299,15 @@ require('image').setup({
     max_height_window_percentage = 50,
 })
 
-
-vim.api.nvim_create_autocmd('BufReadPost', {
+vim.api.nvim_create_autocmd('FileType', {
     callback = function()
-        vim.defer_fn(function()
-            if pcall(vim.treesitter.start) then
-                vim.wo.foldmethod = "expr"
-                vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-                vim.wo.foldlevel = 99
-                vim.wo.foldenable = true
-            end
-        end, 100)
+        local ok = pcall(vim.treesitter.start)
+        if ok then
+            vim.wo.foldmethod = "expr"
+            vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            vim.wo.foldlevel = 99
+            vim.wo.foldenable = true
+        end
     end,
 })
 
@@ -355,24 +374,6 @@ local header = {
         hl = "Normal",
     },
 }
-
--- local actions = {
---     type = "group",
---     val = {
---         {
---             type = "button",
---             val = "  New file",
---             on_press = function() vim.cmd("enew") end,
---             opts = { shortcut = "n", position = "center", hl = "Normal" },
---         },
---         {
---             type = "button",
---             val = "  Quit",
---             on_press = function() vim.cmd("qa") end,
---             opts = { shortcut = "q", position = "center", hl = "Normal" },
---         },
---     },
--- }
 
 local layout = {
     { type = "padding", val = math.floor(vim.o.lines / 3) },
