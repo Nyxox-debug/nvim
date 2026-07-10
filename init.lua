@@ -72,7 +72,7 @@ vim.pack.add({ gh('rcarriga/nvim-notify') })
 vim.pack.add({ gh('folke/trouble.nvim') })
 vim.pack.add({ gh('goolord/alpha-nvim') })
 vim.pack.add({ gh('3rd/image.nvim') })
-vim.pack.add({ gh('stevearc/conform.nvim') })   -- Added: formatter (prettier etc.)
+vim.pack.add({ gh('stevearc/conform.nvim') }) -- Added: formatter (prettier etc.)
 -- vim.pack.add({ gh('vhyrro/luarocks.nvim') }) -- only if using magick_rock
 
 
@@ -211,18 +211,18 @@ require('blink.cmp').setup({
 -- Or install via Mason: :MasonInstall prettier
 require('conform').setup({
     formatters_by_ft = {
-        html       = { 'prettier' },
-        css        = { 'prettier' },
-        scss       = { 'prettier' },
-        javascript = { 'prettier' },
-        typescript = { 'prettier' },
+        html            = { 'prettier' },
+        css             = { 'prettier' },
+        scss            = { 'prettier' },
+        javascript      = { 'prettier' },
+        typescript      = { 'prettier' },
         javascriptreact = { 'prettier' },
         typescriptreact = { 'prettier' },
-        svelte     = { 'prettier' },
-        json       = { 'prettier' },
-        jsonc      = { 'prettier' },
-        yaml       = { 'prettier' },
-        markdown   = { 'prettier' },
+        svelte          = { 'prettier' },
+        json            = { 'prettier' },
+        jsonc           = { 'prettier' },
+        yaml            = { 'prettier' },
+        markdown        = { 'prettier' },
     },
     format_on_save = nil, -- set to { timeout_ms = 500 } if you want auto-format on save
 })

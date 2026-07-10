@@ -15,6 +15,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
             require('conform').format({ async = true, lsp_fallback = true })
         end)
 
+        k('i', '<C-k>', function()
+            require('blink.cmp').show()
+        end)
+
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if client and client:supports_method('textDocument/semanticTokens') then
             vim.lsp.semantic_tokens.enable(true, { bufnr = buf })
