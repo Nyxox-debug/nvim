@@ -204,6 +204,16 @@ require('blink.cmp').setup({
         default = { "lsp", "path", "buffer" },
     },
     fuzzy = { implementation = "lua" },
+    completion = {
+        documentation = {
+            auto_show = true,
+            auto_show_delay_ms = 500,
+        },
+    },
+
+    signature = {
+        enabled = true,
+    },
 })
 
 -- conform.nvim: handles formatting for filetypes whose LSP doesn't provide it
