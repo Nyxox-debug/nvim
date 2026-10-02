@@ -3,6 +3,7 @@ vim.g.mapleader = " "
 local keymap = vim.keymap.set
 
 keymap("n", "<leader>ch", "<cmd>Telescope git_commits<cr>")
+keymap("n", "<leader>T", "<cmd>Telescope<cr>")
 local mono_active = false
 
 keymap("n", "<leader>tm", function()
