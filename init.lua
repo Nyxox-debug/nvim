@@ -300,7 +300,7 @@ require('nvim-treesitter').setup {
     install_dir = vim.fn.stdpath('data') .. '/site',
 }
 
-require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte', 'python', 'r', 'java', 'bash', 'jsonc', 'yaml', 'dockerfile' }
+require('nvim-treesitter').install { 'rust', 'javascript', 'zig', 'lua', 'vimdoc', 'go', 'query', 'markdown', 'cpp', 'css', 'json', 'html', 'dockerfile', 'svelte', 'python', 'r', 'java', 'bash', 'jsonc', 'yaml', 'dockerfile', 'typescript', 'tsx' }
 
 require('image').setup({
     backend = "kitty",
